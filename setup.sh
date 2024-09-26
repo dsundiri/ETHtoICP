@@ -29,9 +29,14 @@ git branch -M main
 echo "Enter your GitHub repository URL (e.g., https://github.com/username/repo.git):"
 read REPO_URL
 
-# Step 6: Add the remote GitHub repository
-echo "Adding the remote GitHub repository..."
-git remote add origin "$REPO_URL"
+# Step 6: Check if remote origin exists
+if git remote get-url origin &>/dev/null; then
+  echo "Remote 'origin' already exists. Updating the remote URL..."
+  git remote set-url origin "$REPO_URL"
+else
+  echo "Adding the remote GitHub repository..."
+  git remote add origin "$REPO_URL"
+fi
 
 # Step 7: Push the code to GitHub
 echo "Pushing the code to GitHub..."
